@@ -38,7 +38,9 @@ public class Conexao extends SQLiteOpenHelper {
                 "id integer primary key autoincrement, " + // ID automático e único
                 "nome varchar(50), " +                    // Limite de 50 caracteres para o nome
                 "cpf varchar(50), " +                     // Armazenamos CPF como String/Varchar
-                "telefone varchar(50))");                 // Armazenamos telefone como String/Varchar
+                "telefone varchar(50)," +               // Armazenamos telefone como String/Varchar
+                "endereco varchar(50)," +               // Armazenamos endereço como String/Varchar
+                "curso varchar(30))");                 // Armazenamos curso como String/Varchar
     }
 
     /**

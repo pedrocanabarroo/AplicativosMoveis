@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText cpf;
     private EditText telefone;
 
+    private EditText endereco;
+
+    private EditText curso;
+
     // Objeto de persistência (Data Access Object)
     private AlunoDao dao;
 
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         nome = findViewById(R.id.editNome);
         cpf = findViewById(R.id.editCPF);
         telefone = findViewById(R.id.editTelefone);
+        endereco = findViewById(R.id.editEndereco);
+        curso = findViewById(R.id.editCurso);
 
         // Instanciando o DAO. Passamos 'this' (a própria Activity) como Contexto.
         // O Contexto é necessário para o SQLite saber em que pasta do sistema salvar o arquivo.
@@ -52,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         a.setNome(nome.getText().toString());
         a.setCpf(cpf.getText().toString());
         a.setTelefone(telefone.getText().toString());
+        a.setEndereco(endereco.getText().toString());
+        a.setCurso(curso.getText().toString());
 
         // 3. Chamamos o método de persistência do DAO
         // O retorno 'long' indica o ID gerado pelo banco para este novo registro.

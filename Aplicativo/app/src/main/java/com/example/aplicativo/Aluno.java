@@ -19,6 +19,10 @@ public class Aluno implements Serializable {
     private String cpf;      // Documento de identificação (String para preservar zeros à esquerda)
     private String telefone; // Contato do aluno
 
+    private String endereco; // Endereço do aluno
+
+    private String curso; // Curso que o aluno faz
+
     // --- MÉTODOS GETTERS E SETTERS ---
     // Servem para ler (get) e gravar (set) os valores nos atributos privados.
 
@@ -52,6 +56,22 @@ public class Aluno implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
     }
 
     // DICA PARA AULA:

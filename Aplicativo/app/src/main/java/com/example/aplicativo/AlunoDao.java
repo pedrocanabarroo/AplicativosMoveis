@@ -41,6 +41,8 @@ public class AlunoDao {
         values.put("nome", aluno.getNome());
         values.put("cpf", aluno.getCpf());
         values.put("telefone", aluno.getTelefone());
+        values.put("endereco", aluno.getEndereco());
+        values.put("curso", aluno.getCurso());
 
         // Executa a inserção na tabela "aluno".
         // O segundo parâmetro (nullColumnHack) é usado apenas se quisermos inserir uma linha vazia.
