@@ -8,11 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Classe AlunoDao (Database Access Object)
- * Padrão de projeto utilizado para isolar o acesso aos dados da lógica de negócio.
- * Centraliza todas as operações estruturadas (CRUD) no banco de dados SQLite.
- */
 public class AlunoDao {
     private Conexao conexao;
     private SQLiteDatabase banco;
@@ -50,61 +45,34 @@ public class AlunoDao {
         return alunos;
     }
 
-    /**
-     * Valida se os campos obrigatórios do objeto Aluno estão preenchidos.
-     */
-    public boolean validarCampos(Aluno aluno) {
-        return aluno.getNome() != null && !aluno.getNome().trim().isEmpty() &&
-               aluno.getCpf() != null && !aluno.getCpf().trim().isEmpty() &&
-               aluno.getTelefone() != null && !aluno.getTelefone().trim().isEmpty() &&
-               aluno.getEndereco() != null && !aluno.getEndereco().trim().isEmpty() &&
-               aluno.getCurso() != null && !aluno.getCurso().trim().isEmpty();
+    //-------------------------- ATUALIZAR --------------------------//
+    public void atualizar(Aluno aluno){
+        ContentValues values = new ContentValues(); //valores que irei inserir
+        values.put("nome", aluno.getNome());
+        values.put("cpf", aluno.getCpf());
+        values.put("telefone", aluno.getTelefone());
+        banco.update("aluno", values, "id = ?", new String[]{aluno.getId().toString()});
     }
 
-    /**
-     * Valida o CPF seguindo as regras da Receita Federal.
-     */
-    public boolean validarCpf(String cpf) {
+    public boolean validaCpf(String cpf) {
         if (cpf == null) return false;
-        
-        // Remove caracteres não numéricos
-        cpf = cpf.replaceAll("[^0-9]", "");
+        // Lógica simplificada conforme o slide
+        return cpf.length() == 11;
+    }
 
-        if (cpf.length() != 11 || 
-            cpf.equals("00000000000") || cpf.equals("11111111111") ||
-            cpf.equals("22222222222") || cpf.equals("33333333333") ||
-            cpf.equals("44444444444") || cpf.equals("55555555555") ||
-            cpf.equals("66666666666") || cpf.equals("77777777777") ||
-            cpf.equals("88888888888") || cpf.equals("99999999999")) {
-            return false;
-        }
+    public boolean cpfExistente(String cpf) {
+        Cursor cursor = banco.query("aluno", new String[]{"id"}, "cpf = ?", new String[]{cpf}, null, null, null);
+        boolean existe = cursor.getCount() > 0;
+        cursor.close();
+        return existe;
+    }
 
-        try {
-            // Cálculo do 1º Dígito Verificador (D1)
-            int soma = 0;
-            int peso = 10;
-            for (int i = 0; i < 9; i++) {
-                int num = (int) (cpf.charAt(i) - 48);
-                soma += (num * peso);
-                peso--;
-            }
-            int resto = 11 - (soma % 11);
-            char digito10 = (resto == 10 || resto == 11) ? '0' : (char) (resto + 48);
+    public boolean validaTelefone(String telefone) {
+        // Formato: (XX) 9XXXX-XXXX
+        return telefone.matches("^\\(\\d{2}\\) 9\\d{4}-\\d{4}$");
+    }
 
-            // Cálculo do 2º Dígito Verificador (D2)
-            soma = 0;
-            peso = 11;
-            for (int i = 0; i < 10; i++) {
-                int num = (int) (cpf.charAt(i) - 48);
-                soma += (num * peso);
-                peso--;
-            }
-            resto = 11 - (soma % 11);
-            char digito11 = (resto == 10 || resto == 11) ? '0' : (char) (resto + 48);
-
-            return (digito10 == cpf.charAt(9)) && (digito11 == cpf.charAt(10));
-        } catch (Exception e) {
-            return false;
-        }
+    public void excluir(Aluno a){
+        banco.delete("aluno", "id = ?",new String[]{a.getId().toString()}); // no lugar do ? vai colocar o id do aluno
     }
 }
