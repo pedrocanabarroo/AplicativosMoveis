@@ -41,6 +41,9 @@ public class Conexao extends SQLiteOpenHelper {
                 "telefone varchar(50)," +               // Armazenamos telefone como String/Varchar
                 "endereco varchar(50)," +               // Armazenamos endereço como String/Varchar
                 "curso varchar(30))");                 // Armazenamos curso como String/Varchar
+
+        db.execSQL("create table aluno(id integer primary key autoincrement, " +"nome varchar(50), " +
+                "cpf varchar(50), telefone varchar(50), foto_bytes BLOB)");
     }
 
     /**

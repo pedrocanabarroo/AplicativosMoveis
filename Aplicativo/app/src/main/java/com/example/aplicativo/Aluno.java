@@ -7,6 +7,19 @@ public class Aluno implements Serializable {
     private String nome;
     private String cpf;
     private String telefone;
+
+    // camera
+
+    private byte [] fotoBytes;
+
+    public byte[] getFotoBytes() {
+        return fotoBytes;
+    }
+
+    public void setFotoBytes(byte[] fotoBytes) {
+        this.fotoBytes = fotoBytes;
+    }
+
     private String endereco;
     private String curso;
 

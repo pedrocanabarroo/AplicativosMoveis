@@ -22,6 +22,7 @@ public class AlunoDao {
         values.put("nome", aluno.getNome());
         values.put("cpf", aluno.getCpf());
         values.put("telefone", aluno.getTelefone());
+        values.put("fotoBytes", aluno.getFotoBytes());
         values.put("endereco", aluno.getEndereco());
         values.put("curso", aluno.getCurso());
         return banco.insert("aluno", null, values);
@@ -29,7 +30,7 @@ public class AlunoDao {
 
     public List<Aluno> obterTodos(){
         List<Aluno> alunos = new ArrayList<>();
-        Cursor cursor = banco.query("aluno", new String[]{"id", "nome", "cpf", "telefone", "endereco", "curso"},
+        Cursor cursor = banco.query("aluno", new String[]{"id", "nome", "cpf", "telefone", "endereco", "curso", "fotoBytes"},
                 null, null, null, null, null);
         while(cursor.moveToNext()){
             Aluno a = new Aluno();
@@ -51,6 +52,7 @@ public class AlunoDao {
         values.put("nome", aluno.getNome());
         values.put("cpf", aluno.getCpf());
         values.put("telefone", aluno.getTelefone());
+        values.put("fotoBytes", aluno.getFotoBytes());
         banco.update("aluno", values, "id = ?", new String[]{aluno.getId().toString()});
     }
 
